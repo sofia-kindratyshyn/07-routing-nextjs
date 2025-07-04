@@ -8,17 +8,22 @@ type NotePreviewProps = {
 
 export default async function NotePrewievPage({ params }: NotePreviewProps) {
   const { id } = await params
+  const numericId = Number(id)
+
+  if (isNaN(numericId)) {
+    throw new Error('Invalid ID: not a number')
+  }
 
   const queryClient = new QueryClient()
 
-  queryClient.prefetchQuery({
-    queryKey: ['note_id'],
-    queryFn: () => fetchNoteById(id),
+  await queryClient.prefetchQuery({
+    queryKey: ['note-preview', numericId],
+    queryFn: () => fetchNoteById(numericId),
   })
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <NotePreview id={id} />
+      <NotePreview id={numericId} />
     </HydrationBoundary>
   )
 }

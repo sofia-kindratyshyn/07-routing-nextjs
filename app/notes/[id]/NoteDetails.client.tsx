@@ -5,14 +5,14 @@ import { fetchNoteById } from '../../../lib/api'
 import css from './NoteDetails.module.css'
 import { Note } from '../../../types/note'
 
-export default function NoteDetailsClient({ noteId }: { noteId: string }) {
+export default function NoteDetailsClient({ id }: { id: number }) {
   const {
     data: note,
     isLoading,
     error,
   } = useQuery<Note>({
-    queryKey: ['note', noteId],
-    queryFn: () => fetchNoteById(noteId),
+    queryKey: ['note-details', id],
+    queryFn: () => fetchNoteById(id),
     refetchOnMount: false,
   })
 

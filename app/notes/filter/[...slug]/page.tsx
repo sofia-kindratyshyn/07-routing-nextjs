@@ -7,13 +7,13 @@ type FilteredNotesProps = {
 
 export default async function FilteredNotes({ params }: FilteredNotesProps) {
   const { slug } = await params
-  const notes = await getNotes('', 1)
+  const notes = slug[0] === 'All' ? await getNotes('', 1) : await getNotes('', 1, slug[0])
   return (
     <>
       {slug[0] === 'All' ? (
         <NotesClient initialNotes={notes} />
       ) : (
-        <NotesClient initialNotes={notes} tag={slug} />
+        <NotesClient initialNotes={notes} tag={slug[0]} />
       )}
     </>
   )

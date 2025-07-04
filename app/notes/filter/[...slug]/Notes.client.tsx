@@ -13,8 +13,8 @@ import Modal from '../../../../components/Modal/Modal'
 import NoteForm from '../../../../components/NoteForm/NoteForm'
 
 type NotesClientProps = {
-  tag?: string[]
-  initialNotes?: NotesResponse
+  tag?: string
+  initialNotes: NotesResponse
 }
 
 export default function NotesClient({ tag, initialNotes }: NotesClientProps) {
@@ -25,7 +25,7 @@ export default function NotesClient({ tag, initialNotes }: NotesClientProps) {
 
   const { data, isFetching } = useQuery({
     queryKey: ['notes', debouncedText, page, tag],
-    queryFn: () => getNotes(debouncedText, page, tag?.[0]),
+    queryFn: () => getNotes(debouncedText, page, tag),
     placeholderData: keepPreviousData,
     initialData: initialNotes,
     refetchOnMount: false,
@@ -65,7 +65,7 @@ export default function NotesClient({ tag, initialNotes }: NotesClientProps) {
 
       {data?.notes?.length === 0 && !isFetching && <p>There are no notes found for your request</p>}
 
-      {data && data?.notes?.length > 0 && <NoteList notes={data.notes} category={tag} />}
+      {data && data?.notes?.length > 0 && <NoteList notes={data.notes} />}
 
       {openModal && (
         <Modal toClose={closeModal}>

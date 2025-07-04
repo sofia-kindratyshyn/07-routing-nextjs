@@ -7,7 +7,7 @@ import Link from 'next/link'
 
 interface NoteListProps {
   notes: Note[]
-  category?: string[]
+  category?: string
 }
 
 export default function NoteList({ notes, category }: NoteListProps) {
@@ -27,7 +27,7 @@ export default function NoteList({ notes, category }: NoteListProps) {
   return (
     <ul className={css.list}>
       {notes
-        .filter(note => !category || note.tag === category[0])
+        .filter(note => !category || note.tag === category)
         .map(note => (
           <li key={note.id} className={css.listItem}>
             <h2 className={css.title}>{note.title}</h2>
